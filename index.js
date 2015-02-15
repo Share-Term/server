@@ -28,15 +28,13 @@ module.exports = function (term) {
       ;
 
     Bloggify.server.page.add("/term", function (lien) {
-        lien.end(lien.search);
-        //lien.end(Views.editor({
-        //    dashboard: dashboard
-        //  , session: sessionData
-        //  , data: {
-        //        type: "page"
-        //      , page: {}
-        //    }
-        //}));
+        lien.end(Views.shareTerm({
+            shareTerm: term
+          , id: lien.search.id
+          , data: {
+                term: _terms[lien.search.id]
+            }
+        }));
     });
 
     // Socket connected
