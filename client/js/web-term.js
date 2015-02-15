@@ -74,13 +74,11 @@
             });
 
             // Create the terminal
-            term.socket.emit("create", win.cols, win.rows, function(err, data) {
-                if (err) return self._destroy();
-                $title.text(data.process);
-                term.emit("open tab", term);
-                term.emit("open");
-                term.updateSize();
-            });
+            term.socket.emit("getTerm", { id: Url.queryString("id") })
+
+            term.emit("open tab", term);
+            term.emit("open");
+            // term.updateSize();
 
             // Listen for connect
             term.socket.on("connect", function() {
@@ -88,27 +86,26 @@
             });
 
             // Listen for data
-            term.socket.on("data", function(data) {
+            term.socket.on("_termData", function(data) {
                 tab.write(data);
             });
 
             // Listen for kill event
             term.socket.on("kill", function() {
-                window.close()
+                alert("Closed");
             });
-
 
             tab.open(win.$.get(0));
             tab.focus();
-            tab.on("data", function (data) {
-                term.socket.emit("data", data);
-            });
+            // tab.on("data", function (data) {
+            //     term.socket.emit("data", data);
+            // });
 
             win.bind();
 
             term.emit("load");
             term.emit("open");
-            term.updateSize();
+            // term.updateSize();
         }
 
         // Open the terminal
