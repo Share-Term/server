@@ -1,6 +1,13 @@
+// Dependencies
 var SocketIO = require("socket.io")
   , EventEmitter = require("events").EventEmitter
+  , Jade = require("jade")
   ;
+
+// Configurations
+var Views = {
+    shareTerm: Jade.compileFile(__dirname + "/ui/index.jade")
+};
 
 function Term(socket) {
     var ev = new EventEmitter();
@@ -9,7 +16,6 @@ function Term(socket) {
     });
 
     socket.on("_termClosed", function (data) {
-        console.log(">>>>");
         ev.emit("close", data);
     });
     return ev;
@@ -20,6 +26,18 @@ module.exports = function (term) {
     var io = require("socket.io").listen(Bloggify.server._server)
       , _terms = {}
       ;
+
+    Bloggify.server.page.add("/term", function (lien) {
+        lien.end(lien.search);
+        //lien.end(Views.editor({
+        //    dashboard: dashboard
+        //  , session: sessionData
+        //  , data: {
+        //        type: "page"
+        //      , page: {}
+        //    }
+        //}));
+    });
 
     // Socket connected
     io.sockets.on("connection", function(socket) {
@@ -73,4 +91,3 @@ module.exports = function (term) {
         });
     });
 };
-
