@@ -11,6 +11,7 @@ var Views = {
 
 function Term(socket) {
     var ev = new EventEmitter();
+
     socket.on("_termData", function (data) {
         ev.emit("data", data);
     });
@@ -18,6 +19,12 @@ function Term(socket) {
     socket.on("_termClosed", function (data) {
         ev.emit("close", data);
     });
+
+    socket.on("_termResized", function (data) {
+        ev.size = data;
+        ev.emit("resize", data);
+    });
+
     return ev;
 }
 
@@ -39,8 +46,6 @@ module.exports = function (term) {
 
     // Socket connected
     io.sockets.on("connection", function(socket) {
-
-        console.log(socket.id);
 
         // Emit welcome
         socket.emit("welcome", {
@@ -64,9 +69,14 @@ module.exports = function (term) {
                 socket.emit("_termData", data);
             });
 
+            term.on("resize", function (data) {
+                socket.emit("_termResized", data);
+            });
+
+            term.emit("resize", term.size);
+
             // Term closed
             term.on("close", function (data) {
-                console.log("> Emitting _termClosed");
                 socket.emit("_termClosed", data);
             });
         });
@@ -75,7 +85,6 @@ module.exports = function (term) {
         socket.on("createTerm", function (data) {
             _terms[socket.id] = new Term(socket);
             _terms[socket.id].on("close", function () {
-                console.log("Deleting...");
                 setTimeout(function() {
                     delete _terms[socket.id];
                 }, 1000);
@@ -83,8 +92,6 @@ module.exports = function (term) {
         });
 
         socket.on("error", function (err) {
-            debugger
-            console.log(err);
             socket.emit("_termError", err);
         });
     });
