@@ -1,49 +1,20 @@
 (function ($) {
     var EventEmitter = Terminal.EventEmitter;
 
-    // Text size plugin
-    $.fn.textSize = function () {
-        var $self = this;
-
-        function getCharSize() {
-            var $span = $("<span>", { text: "foo" });
-            $self.children().first().append($span);
-            var size = {
-                width: $span.outerWidth() / 3
-              , height: $span.outerHeight()
-            };
-            $span.remove();
-            return size;
-        };
-
-        var charSize = getCharSize();
-
-        return {
-            x: Math.floor($self.width() / charSize.width)
-          , y: Math.floor($self.height() / charSize.height)
-        };
-    };
-
     // Web Term plugin
     $.fn.webTerm = function () {
         var $self = this;
         var term = new EventEmitter;
         var inherits = Terminal.inherits;
 
-        term.updateSize = function () {
-            var tSize = $(".terminal").textSize();
-            term.w.cols = tSize.x || Terminal.geometry[0];
-            term.w.rows = tSize.y || Terminal.geometry[1];
+        term.updateSize = function (size) {
+            size = size || {};
+            term.w.cols = size.width || Terminal.geometry[0];
+            term.w.rows = size.height || Terminal.geometry[1];
 
             term.socket.emit("resize", term.w.cols, term.w.rows);
             term.tab.resize(term.w.cols, term.w.rows);
         };
-
-        var _resizeTimer = null;
-        $(window).on("resize", function () {
-            clearTimeout(_resizeTimer);
-            _resizeTimer = setTimeout(term.updateSize, 100);
-        });
 
         function openTerm() {
             term.socket = io.connect();
@@ -90,6 +61,10 @@
                 tab.write(data);
             });
 
+            term.socket.on("_termResized", function(size) {
+                term.updateSize(size);
+            });
+
             // Listen for kill event
             term.socket.on("kill", function() {
                 alert("Closed");
@@ -105,7 +80,7 @@
 
             term.emit("load");
             term.emit("open");
-            // term.updateSize();
+            term.updateSize();
         }
 
         // Open the terminal
