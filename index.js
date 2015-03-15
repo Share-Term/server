@@ -136,10 +136,15 @@ module.exports = function (term) {
             if ("yes" in lien.data) {
                 thisTerm._access[lien.data.clientId] = true;
                 delete thisTerm._requestingControl[lien.data.clientId];
+                io.sockets.connected[lien.data.clientId].emit("remoteControlAccepted");
             }
         } else if (!lien.search || !lien.search.clientId || !lien.search.token || !lien.search.termId) {
             lien.redirect("/");
         } else if (lien.method === "get") {
+            if (!_terms[lien.search.termId]
+                || !_terms[lien.search.termId]._requestingControl[lien.search.clientId]) {
+                lien.redirect("/");
+            }
             lien.end(Views.requestControl({
                 shareTerm: term
               , data: {
