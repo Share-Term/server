@@ -8,14 +8,21 @@ head
     meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
     meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
     title Share Term
+    - if (data.term) {
     script(src="//code.jquery.com/jquery-1.11.2.min.js")
     script(src="https://cdn.socket.io/socket.io-1.3.4.js")
     script(src=CLIENT_ROOT + "/js/term.js")
     script(src=CLIENT_ROOT + "/js/url.min.js")
     script(src=CLIENT_ROOT + "/js/web-term.js")
+    - }
     link(rel='stylesheet', type='text/css', href=CLIENT_ROOT + '/css/style.css')
   body
     .container
         - if (!data.term) {
-        .error.not-found Not found.
+        .not-found-wrapper
+            .error.not-found There is no terminal session here.
+            form(method="get", action="/term")
+                input.form-elm(placeholder="Enter the terminal id", name="id")
+                button(type="submit").btn.bg-black.mrg-s Open
         - }
+
