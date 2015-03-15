@@ -37,10 +37,11 @@ head
               |.
         - } else {
             .controls
-                button.request-control.btn.bg-black
+                a(href="#", title="Request remote control").request-control.btn.bg-black
                     span.octicon.octicon-radio-tower
-                    = " "
-                    | Request remote control
-
+                a(target="blank", href="https://github.com/Bloggify", title="Bloggify on GitHub").btn.bg-black
+                    span.octicon.octicon-mark-github
+                a(href="/", title="Visit home").btn.bg-black
+                    span.octicon.octicon-home
         - }
 
