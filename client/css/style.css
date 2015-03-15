@@ -1,5 +1,6 @@
 @import url('http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700');
 @import url("./caiuss.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/octicons/2.2.0/octicons.css");
 
 div {
   border: 0;
@@ -45,3 +46,10 @@ html, body {
     background: #222;
 }
 
+a {
+    text-decoration: underline !important;
+    color: #2c3e50 !important;
+}
+a:hover {
+    opacity: 0.8;
+}
