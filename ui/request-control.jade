@@ -1,0 +1,29 @@
+- shareTerm = shareTerm || {};
+- var CLIENT_ROOT = "/api/plugin-file/" + shareTerm.name;
+
+doctype html
+html
+head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
+    title Share Term - Request control
+    link(rel='stylesheet', type='text/css', href=CLIENT_ROOT + '/css/style.css')
+  body
+    .container
+        .wrapper
+            p Do you accept remote control for user with id:
+                strong #{data.clientId}
+                | ?
+            form(method="post", action="/term/request-control")
+                input(value=data.clientId, name="clientId", type="hidden")
+                input(value=data.token, name="token", type="hidden")
+                input(value=data.termId, name="termId", type="hidden")
+                button(name="yes").btn.bg-green.mrg-s
+                    | Yes
+                    = " "
+                    span.octicon.octicon-arrow-right
+                button(name="no").btn.bg-red.mrg-s
+                    | No
+                    = " "
+                    span.octicon.octicon-arrow-right
