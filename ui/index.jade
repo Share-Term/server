@@ -20,9 +20,23 @@ head
     .container
         - if (!data.term) {
         .not-found-wrapper
-            .error.not-found There is no terminal session here.
+            .error.not-found
+                span.octicon.octicon-alert
+                = " "
+                | There is no terminal session here.
             form(method="get", action="/term")
                 input.form-elm(placeholder="Enter the terminal id", name="id")
-                button(type="submit").btn.bg-black.mrg-s Open
+                button(type="submit").btn.bg-black.mrg-s
+                    | OK
+                    = " "
+                    span.octicon.octicon-arrow-right
+
+            p Or go to the
+              = " "
+              a(href="/") main page
+              |.
+        - } else {
+            .controls
+
         - }
 
