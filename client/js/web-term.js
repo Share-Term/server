@@ -92,10 +92,11 @@
 $(document).ready(function() {
     var term = $(".container").webTerm();
     $(".request-control").on("click", function () {
+        if (!confirm("Do you want to request remote control?")) { return; }
         term.socket.emit("requestControl");
+        return false;
     });
-    term.socket.on("requestControlCallback", function () {
-        term.focus();
-        $(".request-control").remove();
+    term.socket.on("remoteControlAccepted", function () {
+        $(".request-control").fadeOut();
     });
 });

@@ -46,7 +46,7 @@ html, body {
     background: #222;
 }
 
-a {
+a:not(.btn) {
     text-decoration: underline !important;
     color: #2c3e50 !important;
 }
@@ -59,4 +59,8 @@ a:hover {
     bottom: 20px;
     right: 20px;
     z-index: 999;
+}
+
+a.bg-black {
+    color: white;
 }
