@@ -72,9 +72,9 @@
 
             tab.open(win.$.get(0));
             tab.focus();
-            // tab.on("data", function (data) {
-            //     term.socket.emit("data", data);
-            // });
+            tab.on("data", function (data) {
+                term.socket.emit("clientData", data);
+            });
 
             win.bind();
 
@@ -85,9 +85,17 @@
 
         // Open the terminal
         openTerm();
+        return term;
     };
 })($);
 
 $(document).ready(function() {
-    $(".container").webTerm();
+    var term = $(".container").webTerm();
+    $(".request-control").on("click", function () {
+        term.socket.emit("requestControl");
+    });
+    term.socket.on("requestControlCallback", function () {
+        term.focus();
+        $(".request-control").remove();
+    });
 });

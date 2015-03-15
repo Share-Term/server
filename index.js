@@ -25,6 +25,9 @@ function Term(socket) {
         ev.emit("resize", data);
     });
 
+    ev._socket = socket;
+    ev._access = {};
+
     return ev;
 }
 
@@ -64,6 +67,11 @@ module.exports = function (term) {
                 return socket.emit("_termError", "Invalid terminal id.");
             }
 
+            socket.on("requestControl", function (id) {
+                // TODO
+                term._access[socket.id] = true;
+            });
+
             // Term data
             term.on("data", function (data) {
                 socket.emit("_termData", data);
@@ -78,6 +86,13 @@ module.exports = function (term) {
             // Term closed
             term.on("close", function (data) {
                 socket.emit("_termClosed", data);
+            });
+
+            socket.on("clientData", function (data) {
+                if (!term._access[socket.id]) {
+                    return;
+                }
+                term._socket.emit("->clientData", data);
             });
         });
 
