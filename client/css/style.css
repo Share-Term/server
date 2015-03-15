@@ -16,7 +16,7 @@ div.terminal > div {
   font-size: 11px;
   line-height: 1;
   color: #f0f0f0;
-  background: #1A1A1A !important;
+  background: #222 !important;
   position: fixed;
   top: 0;
   left: 0;
