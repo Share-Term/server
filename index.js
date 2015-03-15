@@ -71,7 +71,6 @@ module.exports = function (term) {
             }
 
             socket.on("requestControl", function () {
-                debugger
                 var token = term._requestingControl[socket.id] = Math.random()
                   , data = {
                         clientId: socket.id
@@ -79,7 +78,6 @@ module.exports = function (term) {
                       , termId: term._socket.id
                     }
                   ;
-                console.log(data);
                 term._socket.emit("->requestControl", data);
             });
 
@@ -135,8 +133,10 @@ module.exports = function (term) {
             if (token.toString() !== lien.data.token) {
                 return;
             }
-            thisTerm._access[lien.data.clientId] = true;
-            delete thisTerm._requestingControl[lien.data.clientId];
+            if ("yes" in lien.data) {
+                thisTerm._access[lien.data.clientId] = true;
+                delete thisTerm._requestingControl[lien.data.clientId];
+            }
         } else if (!lien.search || !lien.search.clientId || !lien.search.token || !lien.search.termId) {
             lien.redirect("/");
         } else if (lien.method === "get") {
