@@ -66,8 +66,8 @@
             });
 
             // Listen for kill event
-            term.socket.on("kill", function() {
-                alert("Closed");
+            term.socket.on("_termClosed", function() {
+                location.pathname = "/thank-you";
             });
 
             tab.open(win.$.get(0));
