@@ -7,10 +7,13 @@ var SocketIO = require("socket.io")
 // Configurations
 var Views = {
     shareTerm: Jade.compileFile(__dirname + "/ui/index.jade")
+  , requestControl: Jade.compileFile(__dirname + "/ui/request-control.jade")
 };
 
 function Term(socket) {
-    var ev = new EventEmitter();
+    var ev = new EventEmitter()
+      , _requestingControl = ev._requestingControl = {}
+      ;
 
     socket.on("_termData", function (data) {
         ev.emit("data", data);
@@ -67,9 +70,17 @@ module.exports = function (term) {
                 return socket.emit("_termError", "Invalid terminal id.");
             }
 
-            socket.on("requestControl", function (id) {
-                // TODO
-                term._access[socket.id] = true;
+            socket.on("requestControl", function () {
+                debugger
+                var token = term._requestingControl[socket.id] = Math.random()
+                  , data = {
+                        clientId: socket.id
+                      , token: token
+                      , termId: term._socket.id
+                    }
+                  ;
+                console.log(data);
+                term._socket.emit("->requestControl", data);
             });
 
             // Term data
@@ -109,5 +120,34 @@ module.exports = function (term) {
         socket.on("error", function (err) {
             socket.emit("_termError", err);
         });
+    });
+
+    // Requesting control
+    Bloggify.server.page.add("/term/request-control", function (lien) {
+        if (lien.method === "post") {
+            lien.redirect("/");
+            var thisTerm = _terms[lien.data.termId];
+            if (!thisTerm) {
+                return;
+            }
+            var token = thisTerm._requestingControl[lien.data.clientId];
+            if (!token) { return; }
+            if (token.toString() !== lien.data.token) {
+                return;
+            }
+            thisTerm._access[lien.data.clientId] = true;
+            delete thisTerm._requestingControl[lien.data.clientId];
+        } else if (!lien.search || !lien.search.clientId || !lien.search.token || !lien.search.termId) {
+            lien.redirect("/");
+        } else if (lien.method === "get") {
+            lien.end(Views.requestControl({
+                shareTerm: term
+              , data: {
+                    clientId: lien.search.clientId
+                  , termId: lien.search.termId
+                  , token: lien.search.token
+                }
+            }));
+        }
     });
 };
