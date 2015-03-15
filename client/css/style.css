@@ -30,7 +30,7 @@ div.terminal > div {
   background: #f0f0f0;
 }
 
-.not-found-wrapper {
+.wrapper {
     max-width: 100%;
     width: 450px;
     text-align: center;
