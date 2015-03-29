@@ -80,6 +80,11 @@ module.exports = function (term) {
                 return socket.emit("_termError", "Invalid terminal id.");
             }
 
+            // Emit welcome
+            socket.emit("_connected", {
+               id: socket.id
+            });
+
             socket.on("requestControl", function () {
                 var token = term._requestingControl[socket.id] = Math.random()
                   , data = {
@@ -104,7 +109,7 @@ module.exports = function (term) {
 
             // Term closed
             term.on("close", function (data) {
-                socket.emit("_termClosed", data);
+                socket.emit("->termClosed", data);
             });
 
             socket.on("clientData", function (data) {

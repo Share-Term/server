@@ -66,8 +66,8 @@
             });
 
             // Listen for kill event
-            term.socket.on("_termClosed", function() {
-                location.pathname = "/thank-you";
+            term.socket.on("->termClosed", function() {
+                document.href = "/thank-you";
             });
 
             tab.open(win.$.get(0));
