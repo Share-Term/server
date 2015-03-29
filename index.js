@@ -45,7 +45,7 @@ function Term(socket) {
 
 module.exports = function (term) {
 
-    var io = require("socket.io").listen(Bloggify.server._server)
+    var io = SocketIO.listen(Bloggify.server._server)
       , _terms = {}
       ;
 
