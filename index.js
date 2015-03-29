@@ -10,6 +10,15 @@ var Views = {
   , requestControl: Jade.compileFile(__dirname + "/ui/request-control.jade")
 };
 
+/**
+ * Term
+ * Creates a `Term` instance.
+ *
+ * @name Term
+ * @function
+ * @param {Socket} socket The web socket (from the terminal creator).
+ * @return {EventEmitter} The event emitter terminal.
+ */
 function Term(socket) {
     var ev = new EventEmitter()
       , _requestingControl = ev._requestingControl = {}
@@ -40,6 +49,7 @@ module.exports = function (term) {
       , _terms = {}
       ;
 
+    // Share terminal in browser
     Bloggify.server.page.add("/term", function (lien) {
         lien.end(Views.shareTerm({
             shareTerm: term
@@ -115,6 +125,7 @@ module.exports = function (term) {
             });
         });
 
+        // Listen for errors
         socket.on("error", function (err) {
             socket.emit("_termError", err);
         });
@@ -122,6 +133,8 @@ module.exports = function (term) {
 
     // Requesting control
     Bloggify.server.page.add("/term/request-control", function (lien) {
+
+        // Request response
         if (lien.method === "post") {
             lien.redirect("/");
             var thisTerm = _terms[lien.data.termId];
@@ -138,8 +151,10 @@ module.exports = function (term) {
                 delete thisTerm._requestingControl[lien.data.clientId];
                 io.sockets.connected[lien.data.clientId].emit("remoteControlAccepted");
             }
+        // Inconsistent data
         } else if (!lien.search || !lien.search.clientId || !lien.search.token || !lien.search.termId) {
             lien.redirect("/");
+        // Request page
         } else if (lien.method === "get") {
             if (!_terms[lien.search.termId]
                 || !_terms[lien.search.termId]._requestingControl[lien.search.clientId]) {
