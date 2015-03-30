@@ -4,7 +4,7 @@
     // Web Term plugin
     $.fn.webTerm = function () {
         var $self = this;
-        var term = new EventEmitter;
+        var term = new EventEmitter();
         var inherits = Terminal.inherits;
 
         term.updateSize = function (size) {
@@ -21,7 +21,7 @@
 
             // Initialize ui
             /// Create the window
-            var win = term.w = new EventEmitter;
+            var win = term.w = new EventEmitter();
             win.$ = $self;
             win.$.addClass("webTerm-window");
 
@@ -45,7 +45,7 @@
             });
 
             // Create the terminal
-            term.socket.emit("getTerm", { id: Url.queryString("id") })
+            term.socket.emit("getTerm", { id: Url.queryString("id") });
 
             term.emit("open tab", term);
             term.emit("open");
