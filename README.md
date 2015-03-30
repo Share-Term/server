@@ -1,6 +1,8 @@
 # Bloggify Share Term
 A Bloggify plugin for sharing the terminal to other clients (browsers or terminals).
 
+[Visit share-term.me](http://share-term.me/) for more information.
+
 ## Installation
 ```js
 {
