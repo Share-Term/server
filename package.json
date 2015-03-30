@@ -1,7 +1,7 @@
 {
   "name": "bloggify-share-term",
   "version": "1.0.0",
-  "description": "A Bloggify plugin for sharing the terminal in the browser.",
+  "description": "A Bloggify plugin for sharing the terminal to other clients (browsers or terminals).",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
