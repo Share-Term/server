@@ -5,7 +5,7 @@ A Bloggify plugin for sharing the terminal to other clients (browsers or termina
 ```js
 {
   "name": "share-term",
-  "source": "git@gitub.com:Share-Term/share-term-server.git",
+  "source": "git@gitub.com:Share-Term/server.git",
   "version": "master"
 }
 ```
