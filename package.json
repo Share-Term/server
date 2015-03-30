@@ -1,6 +1,6 @@
 {
   "name": "bloggify-share-term",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Bloggify plugin for sharing the terminal to other clients (browsers or terminals).",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,10 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:bloggify/share-term.git"
-  }
+    "url": "https://github.com/Share-Term/server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Share-Term/server/issues"
+  },
+  "homepage": "https://github.com/Share-Term/server"
 }
