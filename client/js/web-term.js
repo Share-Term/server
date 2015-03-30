@@ -67,7 +67,7 @@
 
             // Listen for kill event
             term.socket.on("->termClosed", function() {
-                document.href = "/thank-you";
+                location = "/support";
             });
 
             tab.open(win.$.get(0));
