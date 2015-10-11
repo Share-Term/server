@@ -43,16 +43,17 @@ function Term(socket) {
     return ev;
 }
 
-module.exports = function (term) {
+module.exports = function () {
 
-    var io = SocketIO.listen(Bloggify.server._server)
+    var self = this
+      , io = SocketIO.listen(Bloggify.server._server)
       , _terms = {}
       ;
 
     // Share terminal in browser
     Bloggify.server.page.add("/term", function (lien) {
         lien.end(Views.shareTerm({
-            shareTerm: term
+            shareTerm: self.plugin
           , id: lien.search.id
           , data: {
                 term: _terms[lien.search.id]
@@ -166,7 +167,7 @@ module.exports = function (term) {
                 lien.redirect("/");
             }
             lien.end(Views.requestControl({
-                shareTerm: term
+                shareTerm: self.plugin
               , data: {
                     clientId: lien.search.clientId
                   , termId: lien.search.termId
