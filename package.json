@@ -1,13 +1,13 @@
 {
   "name": "bloggify-share-term",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "A Bloggify plugin for sharing the terminal to other clients (browsers or terminals).",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ionică Bizău <bizauionica@gmail.com>",
-  "license": "MIT",
+  "license": "KINDLY",
   "keywords": [
     "bloggify",
     "share",
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/Share-Term/server",
   "blah": {
-      "description": "[Visit share-term.me](http://share-term.me/) for more information.",
-      "title": "Share Term `Server`"
+    "description": "[Visit share-term.me](http://share-term.me/) for more information.",
+    "title": "Share Term `Server`"
   }
 }
