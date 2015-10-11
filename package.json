@@ -24,5 +24,9 @@
   "bugs": {
     "url": "https://github.com/Share-Term/server/issues"
   },
-  "homepage": "https://github.com/Share-Term/server"
+  "homepage": "https://github.com/Share-Term/server",
+  "blah": {
+      "description": "[Visit share-term.me](http://share-term.me/) for more information.",
+      "title": "Share Term `Server`"
+  }
 }
