@@ -1,6 +1,6 @@
 {
   "name": "bloggify-share-term",
-  "version": "2.1.0",
+  "version": "2.0.1",
   "description": "A Bloggify plugin for sharing the terminal to other clients (browsers or terminals).",
   "main": "index.js",
   "scripts": {
