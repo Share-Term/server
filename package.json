@@ -1,13 +1,13 @@
 {
   "name": "bloggify-share-term",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A Bloggify plugin for sharing the terminal to other clients (browsers or terminals).",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Ionică Bizău <bizauionica@gmail.com>",
-  "license": "KINDLY",
+  "author": "Ionică Bizău <bizauionica@gmail.com> (https://ionicabizau.net)",
+  "license": "MIT",
   "keywords": [
     "bloggify",
     "share",
@@ -28,6 +28,46 @@
   "homepage": "https://github.com/Share-Term/server",
   "blah": {
     "description": "[Visit share-term.me](http://share-term.me/) for more information.",
-    "title": "Share Term `Server`"
-  }
+    "title": "Share Term `Server`",
+    "installation": [
+      {
+        "h2": "Installation"
+      },
+      {
+        "code": {
+          "language": "js",
+          "content": [
+            "{",
+            "  \"name\": \"share-term\",",
+            "  \"source\": \"git@gitub.com:Share-Term/server.git\",",
+            "  \"version\": \"master\"",
+            "}"
+          ]
+        }
+      },
+      {
+        "h2": "Events"
+      },
+      {
+        "img": {
+          "source": "http://i.imgur.com/bmE54Kp.png"
+        }
+      }
+    ]
+  },
+  "files": [
+    "bin/",
+    "app/",
+    "lib/",
+    "dist/",
+    "src/",
+    "scripts/",
+    "resources/",
+    "menu/",
+    "cli.js",
+    "index.js",
+    "bloggify.js",
+    "bloggify.json",
+    "bloggify/"
+  ]
 }
